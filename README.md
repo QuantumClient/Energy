@@ -8,7 +8,7 @@ repositories {
     maven { url = 'https://jitpack.io' }
 }
 dependencies { 
-    implementation 'com.github.QuantumClient:Energy:0.1'
+    implementation 'com.github.QuantumClient:Energy:0.2'
 }
 ```
 
