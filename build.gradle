@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+group 'com.quantum'
+version '0.1'
+
+repositories {
+    mavenCentral()
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
