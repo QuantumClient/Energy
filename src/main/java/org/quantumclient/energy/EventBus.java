@@ -1,4 +1,4 @@
-package org.quantum.energy;
+package org.quantumclient.energy;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

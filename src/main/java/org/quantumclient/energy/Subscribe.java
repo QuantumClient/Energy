@@ -1,4 +1,4 @@
-package org.quantum.energy;
+package org.quantumclient.energy;
 
 import java.lang.annotation.*;
 
