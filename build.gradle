@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'com.quantum'
+group 'org.quantum'
 version '0.2'
 
 repositories {
