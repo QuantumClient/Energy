@@ -2,18 +2,18 @@
 
 Energy is a lightweight java eventbus.
 
-###Adding Energy into your project:
+### Adding Energy into your project:
 ```gradle
 repositories {
     maven { url = 'https://jitpack.io' }
 }
 dependencies { 
-    implementation 'com.github.QuantumClient:Energy:0.1'
+    implementation 'com.github.QuantumClient:Energy:0.2'
 }
 ```
 
-##Usage
-###Events
+## Usage
+### Events
 Making a new Event
 ```Java
 public TestEvent extends Event {
@@ -30,7 +30,7 @@ public TestEvent extends Event {
 }
 ```
 
-###Posting
+### Posting
 To post an event
 
 ```Java
@@ -39,7 +39,7 @@ To post an event
         // your code here
     }   
 ```
-###Registering
+### Registering
 registering and unregistering a listener
 ```Java
     public void onEnable() {
@@ -50,7 +50,7 @@ registering and unregistering a listener
         Eventbus.register(this);
         }
 ```
-###Subscribing
+### Subscribing
 Subscribing to an event
 ```Java
     @Subscribe
