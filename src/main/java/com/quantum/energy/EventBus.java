@@ -54,7 +54,7 @@ public final class EventBus {
         }
     }
 
-    public static void postEvent(final Event event) {
+    public static void post(final Event event) {
         CopyOnWriteArrayList<Listener> listeners = registeredListeners.get(event.getClass());
         if (listeners != null) {
             for (Listener listener : listeners) {
