@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "energy",
+  "version": "0.3",
+  "name": "Energy",
+  "description": "",
+  "authors": ["ChiquitaV2"],
+  "contact": {
+    "homepage": "https://quantumclient.org/",
+    "sources": "https://github.com/quantumclient/energy",
+    "discord": "https://discord.gg/h8EQyuYTK7"
+  },
+  "license": "GPL-2.0-only",
+  "icon": "assets/icon.png",
+  "badges": [ "library" ],
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/h8EQyuYTK7"
+      },
+      "badges": [ "library" ]
+    }
+  }
+}
