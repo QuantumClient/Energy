@@ -8,7 +8,7 @@ repositories {
     maven { url = 'https://jitpack.io' }
 }
 dependencies { 
-    implementation 'org.quantumclient:energy:VERISON'
+    implementation 'org.quantumclient:Energy:VERISON'
 }
 ```
 
@@ -47,7 +47,7 @@ registering and unregistering a listener
     }
     
     public void onEnable() {
-        Eventbus.register(this);
+        Eventbus.unregister(this);
         }
 ```
 ### Subscribing
