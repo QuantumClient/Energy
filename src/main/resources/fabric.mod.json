@@ -12,7 +12,6 @@
   },
   "license": "GPL-2.0-only",
   "icon": "assets/icon.png",
-  "badges": [ "library" ],
   "custom": {
     "modmenu": {
       "links": {
