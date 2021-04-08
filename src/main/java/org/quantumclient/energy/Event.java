@@ -8,6 +8,9 @@ public abstract class Event {
 
     private boolean cancelled;
 
+    // Some things (rendering) might need to run on a native thread if so change this to true
+    protected boolean multiThreaded = true;
+
     private Era era;
 
     public boolean isCancelled() {
@@ -26,4 +29,11 @@ public abstract class Event {
         return era;
     }
 
+    public void setMultiThreaded(boolean multiThreaded) {
+        this.multiThreaded = multiThreaded;
+    }
+
+    public boolean shouldMuliThread() {
+        return multiThreaded;
+    }
 }

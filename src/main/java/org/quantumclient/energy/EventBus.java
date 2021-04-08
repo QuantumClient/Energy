@@ -3,7 +3,7 @@ package org.quantumclient.energy;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.*;
 
 /**
  * @author ChiquitaV2
@@ -13,10 +13,6 @@ public final class EventBus {
 
     //I will write a readme and java docs later
     private static final HashMap<Class<? extends Event>, CopyOnWriteArrayList<Listener>> registeredListeners = new HashMap<>();
-
-    private EventBus() {
-
-    }
 
     public static void register(final Object registerClass) {
         for (Method method : registerClass.getClass().getMethods()) {
@@ -54,17 +50,25 @@ public final class EventBus {
         }
     }
 
-    public static void post(final Event event) {
+    public static synchronized void post(final Event event) {
         CopyOnWriteArrayList<Listener> listeners = registeredListeners.get(event.getClass());
         if (listeners != null) {
             for (Listener listener : listeners) {
                 listener.method.setAccessible(true);
-                try {
-                    listener.method.invoke(listener.listenerClass, event);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
+                if (event.shouldMuliThread()) {
+                    ForkJoinPool.commonPool().submit(() -> {
+                        try {
+                            listener.method.invoke(listener.listenerClass, event);
+                        } catch (IllegalAccessException | InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                } else {
+                    try {
+                        listener.method.invoke(listener.listenerClass, event);
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

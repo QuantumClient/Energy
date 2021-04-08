@@ -10,15 +10,14 @@
     "sources": "https://github.com/quantumclient/energy",
     "discord": "https://discord.gg/h8EQyuYTK7"
   },
-  "license": "GPL-2.0-only",
+  "license": "GPL-3.0-only",
   "icon": "assets/icon.png",
-  "badges": [ "library" ],
   "custom": {
     "modmenu": {
+      "badges": [ "library" ],
       "links": {
         "modmenu.discord": "https://discord.gg/h8EQyuYTK7"
-      },
-      "badges": [ "library" ]
+      }
     }
   }
 }
