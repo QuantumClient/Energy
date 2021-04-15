@@ -48,7 +48,7 @@ registering and unregistering a listener
     
     public void onEnable() {
         Eventbus.unregister(this);
-        }
+    }
 ```
 ### Subscribing
 Subscribing to an event
