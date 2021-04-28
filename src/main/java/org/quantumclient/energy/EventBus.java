@@ -2,85 +2,69 @@ package org.quantumclient.energy;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.concurrent.*;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ForkJoinPool;
+
 
 /**
  * @author ChiquitaV2
  * @since 19/3/2021
  */
-public final class EventBus {
+public class EventBus implements IEventBus {
 
-    //I will write a readme and java docs later
-    private static final HashMap<Class<? extends Event>, CopyOnWriteArrayList<Listener>> registeredListeners = new HashMap<>();
+    private final Map<Class<? extends Event>, CopyOnWriteArrayList<Listener>> listeners = new ConcurrentHashMap<>();
 
-    public static void register(final Object registerClass) {
+    @Override
+    public void register(Object registerClass) {
         for (Method method : registerClass.getClass().getMethods()) {
-            if (!method.isAnnotationPresent(Subscribe.class)) {
-                continue;
-            }
+            if (!method.isAnnotationPresent(Subscribe.class)) continue;
 
-            if (method.getParameterCount() != 1) {
-                continue;
-            }
+            if (method.getParameterCount() != 1) continue;
 
-            if (!Event.class.isAssignableFrom(method.getParameterTypes()[0])) {
-                continue;
-            }
+            if (!method.isAccessible()) method.setAccessible(true);
 
-            @SuppressWarnings("unchecked") Class<? extends Event> eventType =
-                    (Class<? extends Event>) method.getParameterTypes()[0];
+            @SuppressWarnings("unchecked") Class<? extends Event> event = (Class<? extends Event>) method.getParameterTypes()[0];
 
-            Listener listener = new Listener(registerClass, method);
-            if (!registeredListeners.containsKey(eventType))
-                registeredListeners.put(eventType, new CopyOnWriteArrayList<>());
+            if (!listeners.containsKey(event)) listeners.put(event, new CopyOnWriteArrayList<>());
 
-            registeredListeners.get(eventType).add(listener);
+            listeners.get(event).add(new Listener(registerClass, method));
         }
     }
 
-    public static void unregister(final Object listenerClass) {
-        for (CopyOnWriteArrayList<Listener> listenerList : registeredListeners.values()) {
-            for (int i = 0; i < listenerList.size(); i++) {
-                if (listenerList.get(i).listenerClass == listenerClass) {
-                    listenerList.remove(i);
-                    i -= 1;
+    @Override
+    public void unregister(Object registerClass) {
+        for (CopyOnWriteArrayList<Listener> arrayList : listeners.values()) {
+            arrayList.removeIf(listener -> listener.getListenerClass().equals(registerClass));
+        }
+    }
+
+    @Override
+    public void post(Event event) {
+        List<Listener> listenersList = listeners.get(event.getClass());
+        if (listenersList != null) for (Listener listener : listenersList) {
+            if (event.isCancelled()) return;
+            try {
+                listener.getMethod().invoke(listener.getListenerClass(), event);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public synchronized void mutliThreadPost(Event event) {
+        List<Listener> listenersList = listeners.get(event.getClass());
+        if (listenersList != null) for (Listener listener : listenersList) {
+            if (event.isCancelled()) return;
+            ForkJoinPool.commonPool().submit(() -> {
+                try {
+                    listener.getMethod().invoke(listener.getListenerClass(), event);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
                 }
-            }
-        }
-    }
-
-    public static synchronized void post(final Event event) {
-        CopyOnWriteArrayList<Listener> listeners = registeredListeners.get(event.getClass());
-        if (listeners != null) {
-            for (Listener listener : listeners) {
-                listener.method.setAccessible(true);
-                if (event.shouldMuliThread()) {
-                    ForkJoinPool.commonPool().submit(() -> {
-                        try {
-                            listener.method.invoke(listener.listenerClass, event);
-                        } catch (IllegalAccessException | InvocationTargetException e) {
-                            e.printStackTrace();
-                        }
-                    });
-                } else {
-                    try {
-                        listener.method.invoke(listener.listenerClass, event);
-                    } catch (IllegalAccessException | InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-    }
-
-    private static class Listener {
-        private final Object listenerClass;
-        private final Method method;
-
-        private Listener(final Object listenerClass, final Method method) {
-            this.listenerClass = listenerClass;
-            this.method = method;
+            });
         }
     }
 
