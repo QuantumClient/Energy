@@ -18,12 +18,16 @@ public abstract class Event {
         this.cancelled = cancelled;
     }
 
-    public void setEra(Era era) {
+    protected void setEra(Era era) {
         this.era = era;
     }
 
     public Era getEra() {
         return era;
+    }
+    
+    public boolean isPre() {
+        return this.era.equals(Era.PRE)
     }
 
 }
