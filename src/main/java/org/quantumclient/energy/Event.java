@@ -25,5 +25,9 @@ public abstract class Event {
     public Era getEra() {
         return era;
     }
+    
+    public boolean isPre() {
+        return era.equals(Era.PRE);
+    }
 
 }
