@@ -1,4 +1,6 @@
 # Energy
+[![](https://jitpack.io/v/org.quantumclient/Energy.svg)](https://jitpack.io/#org.quantumclient/Energy) [![discord](https://img.shields.io/badge/Discord-h8EQyuYTK7-3)](https://discord.gg/h8EQyuYTK7)
+
 
 Energy is a lightweight java eventbus.
 
@@ -12,53 +14,9 @@ dependencies {
 }
 ```
 
-## Usage
-### Events
-Making a new Event
-```Java
-public TestEvent extends Event {
-    String string;
-    
-    public TestEvent(String string) {
-	    this.string = string;
-    }
-    
-    public String getString() {
-	    return this.string;
-    }   
-    
-}
-```
+### Usage
 
-### Posting
-To post an event
+#### Example code in found [here](https://github.com/QuantumClient/Energy/tree/main/src/test/java/org/quantumclient/energy)
 
-```Java
-    public void coolThings() {
-         EventBus.post(new TestEvent("test"));
-        // your code here
-    }   
-```
-### Registering
-registering and unregistering a listener
-```Java
-    public void onEnable() {
-        Eventbus.register(this);
-    }
-    
-    public void onEnable() {
-        Eventbus.unregister(this);
-        }
-```
-### Subscribing
-Subscribing to an event
-```Java
-    @Subscribe
-    public void onTestEvent(TestEvent event) {
-        System.out.print(event.getString);
-        //your other code here
-    }
-
-```
 For any other help and to get notified about updates join our [discord](https://discord.gg/h8EQyuYTK7)
 .
