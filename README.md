@@ -7,7 +7,7 @@ Energy is a lightweight and fast java eventbus.
 ### Adding Energy into your project:
 ```gradle
 repositories {
-    maven { url = 'https://jitpack.io' }
+       maven { url 'http://maven.quantumclient.org/releases' }
 }
 dependencies { 
     implementation 'org.quantumclient:Energy:VERISON'
