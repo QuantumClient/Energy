@@ -16,6 +16,6 @@ dependencies {
 
 ### Usage
 
-#### Example code in found [here](https://github.com/QuantumClient/Energy/tree/main/src/test/java/org/quantumclient/energy)
+#### Example code is found [here](https://github.com/QuantumClient/Energy/tree/main/src/test/java/org/quantumclient/energy)
 
 For any other help and to get notified about updates join our [discord](https://discord.gg/h8EQyuYTK7).
