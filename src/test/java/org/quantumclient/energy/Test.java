@@ -2,22 +2,40 @@ package org.quantumclient.energy;
 
 public class Test {
 
-    private final EventBus eventBus;
+    private static EventBus eventBus;
 
     public static void main(String[] args) {
-        Test test = new Test();
-        test.test();
-    }
-
-    public Test() {
         eventBus = new EventBus();
-        eventBus.register(this);
-        eventBus.post(new TestEvent("Hi"));
+        for (int i = 0; i < 250; i++) {
+            Test test = new Test();
+            eventBus.register(test);
+        }
+
+        long total = 0;
+        for (int b = 0; b < 20; b++) {
+            long startTime = System.nanoTime();
+            TestEvent event = new TestEvent("Hello");
+            for (int i = 0; i < 2000; i++) {
+                eventBus.post(event);
+            }
+            long endTime = System.nanoTime();
+            long time = (endTime - startTime) / 1000000;
+            System.out.println("Execution time in milliseconds: " + time);
+            total += time;
+        }
+
+        System.out.println("Execution time average in milliseconds: " + total / 20);
+
     }
 
-    @Subscribe
+    @Subscribe()
     public void onTest(TestEvent event) {
-        System.out.println(event.data);
+        if (10 > event.data.length()) {
+            System.nanoTime();
+        } else {
+            int i = 10;
+            i = event.data.getBytes().length;
+        }
     }
 
     public void test() {

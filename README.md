@@ -1,5 +1,5 @@
 # Energy
-[![](https://jitpack.io/v/org.quantumclient/Energy.svg)](https://jitpack.io/#org.quantumclient/Energy) [![discord](https://img.shields.io/badge/Discord-h8EQyuYTK7-3)](https://discord.gg/h8EQyuYTK7)
+[![version](https://img.shields.io/badge/Maven-2.0-3)](http://maven.quantumclient.org/releases) [![discord](https://img.shields.io/badge/Discord-h8EQyuYTK7-3)](https://discord.gg/h8EQyuYTK7)
 
 
 Energy is a lightweight and fast java eventbus.

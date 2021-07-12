@@ -1,9 +1,10 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
-group 'org.quantum'
-version '1.0'
+group 'org.quantumclient'
+version '2.0'
 
 repositories {
     mavenCentral()
@@ -14,3 +15,28 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
+publishing {
+    publications {
+        publish(MavenPublication) {
+            groupId = 'org.quantumclient'
+            artifactId = 'Energy'
+            version = '2.0'
+
+            from components.java
+
+        }
+    }
+
+    repositories {
+        maven {
+            url "https://maven.quantumclient.org/releases"
+            credentials {
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD")
+            }
+            authentication {
+                basic(BasicAuthentication)
+            }
+        }
+    }
+}
